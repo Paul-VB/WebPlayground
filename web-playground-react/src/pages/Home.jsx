@@ -1,5 +1,5 @@
 import React from 'react';
-import peterGriffin from '../assets/peter_griffin.png';
+import peterGriffin from '../assets/Peter_Griffin.png';
 
 function Home() {
 	return (
