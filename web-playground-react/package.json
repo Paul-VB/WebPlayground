@@ -9,8 +9,7 @@
 		"build": "vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"githubdeploy": "cross-env GITHUB_PAGES=true vite build && gh-pages -d dist",
-		"azuredeploy": "cross-env AZURE_PAGES=true vite build && gh-pages -d dist"
+		"azuredeploy": "bash ../scripts/azureDeploy.sh"
 	},
 	"dependencies": {
 		"react": "^19.1.0",
