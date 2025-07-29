@@ -7,6 +7,10 @@ npm run build
 $currentBranch = git branch --show-current
 Write-Host "Current branch: $currentBranch"
 
+# Get last commit message from current branch
+$lastCommitMsg = git log -1 --pretty=%B
+Write-Host "Last commit message from $currentBranch: $lastCommitMsg"
+
 Write-Host "Switching to AzureLive branch..."
 git checkout AzureLive
 
@@ -16,7 +20,7 @@ git merge $currentBranch --no-edit
 Write-Host "Adding and committing changes..."
 git add -A
 try {
-    git commit -m "Deploying changes from $currentBranch to AzureLive"
+    git commit -m "$lastCommitMsg"
 } catch {
     Write-Host "No changes to commit."
 }
