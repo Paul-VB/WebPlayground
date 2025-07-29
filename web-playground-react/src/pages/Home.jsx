@@ -9,6 +9,7 @@ function Home() {
 				<img src={abe} alt="Placeholder Mugshot" className="headshot" />
 			</div>
 			<h1>Paul Vanden Broeck</h1>
+			<h2>Fullstack Dev</h2>
 			This is a simple React home page.
 		</div>
 	);
