@@ -9,7 +9,7 @@
 		"build": "vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"azuredeploy": "bash ../scripts/azureDeploy.sh"
+		"azuredeploy": "powershell -ExecutionPolicy Bypass -File ../scripts/azureDeploy.ps1"
 	},
 	"dependencies": {
 		"react": "^19.1.0",
