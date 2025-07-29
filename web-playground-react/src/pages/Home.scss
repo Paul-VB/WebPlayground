@@ -13,9 +13,32 @@
 	.headshot {
 		width: 150px;
 		border-radius: 50%;
+		transition: box-shadow 0.3s ease; // Smooth transition for the glow effect
+
+		&:hover {
+			box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); // Adds a 20px glow
+		}
 	}
 
 	h1, h2 {
 		text-align: center;
+	}
+
+	.bird-container {
+		display: flex;
+		justify-content: center;
+		gap: 10px; /* Space between birds */
+		margin: 20px 0; /* Add spacing above and below the birds */
+	}
+
+	.bird {
+		font-size: 2rem;
+		cursor: pointer;
+		transition: color 0.2s ease, transform 0.2s ease; /* Smooth transition for color and scaling */
+
+		&:hover {
+			color: pink; /* Changes text color to pink */
+			transform: scale(1.4); /* Simulates a "4x font weight" by scaling the text */
+		}
 	}
 }
