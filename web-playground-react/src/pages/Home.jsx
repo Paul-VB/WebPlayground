@@ -1,12 +1,12 @@
 import React from 'react';
-import peterGriffin from '../assets/Peter_Griffin.png';
+import abe from '../assets/abe.jpg';
 
 function Home() {
 	return (
 		<>
-			<h1>Home</h1>
+			<img src={abe} alt="Placeholder Mugshot" style={{ width: '150px', borderRadius: '50%' }} />
+			<h1>Paul Vanden Broeck</h1>
 			This is a simple React home page.
-			<img src={peterGriffin} alt="Peter Griffin" />
 		</>
 	);
 }
