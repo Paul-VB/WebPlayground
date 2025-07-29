@@ -9,7 +9,7 @@ Write-Host "Current branch: $currentBranch"
 
 # Get last commit message from current branch
 $lastCommitMsg = git log -1 --pretty=%B
-Write-Host "Last commit message from $currentBranch: $lastCommitMsg"
+Write-Host "Last commit message from $currentBranch\: $lastCommitMsg"
 
 Write-Host "Switching to AzureLive branch..."
 git checkout AzureLive
