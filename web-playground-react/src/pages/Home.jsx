@@ -1,10 +1,13 @@
 import React from 'react';
+import './Home.css';
 import abe from '../assets/abe.jpg';
 
 function Home() {
 	return (
 		<>
-			<img src={abe} alt="Placeholder Mugshot" style={{ width: '150px', borderRadius: '50%' }} />
+			<div className="headshot-container">
+				<img src={abe} alt="Placeholder Mugshot" className="headshot" />
+			</div>
 			<h1>Paul Vanden Broeck</h1>
 			This is a simple React home page.
 		</>

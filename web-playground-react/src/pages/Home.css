@@ -1,0 +1,11 @@
+.headshot-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem 0; /* Adds top and bottom padding */
+}
+
+.headshot {
+	width: 150px;
+	border-radius: 50%;
+}
