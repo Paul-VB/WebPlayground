@@ -3,6 +3,10 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
+# Add current repo as safe directory for WSL Git (prevents "dubious ownership" error)
+REPO_PATH=$(git rev-parse --show-toplevel)
+git config --global --add safe.directory "$REPO_PATH"
+
 # Build the project
 echo "Building the project..."
 npm run build
@@ -22,7 +26,7 @@ git merge $CURRENT_BRANCH --no-edit
 # Commit the changes
 echo "Committing the changes..."
 git add -A
-git commit -m "Deploying changes from $CURRENT_BRANCH to AzureLive"
+git commit -m "Deploying changes from $CURRENT_BRANCH to AzureLive" || echo "No changes to commit."
 
 # Push the changes
 echo "Pushing to AzureLive..."
