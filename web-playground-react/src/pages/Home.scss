@@ -1,0 +1,21 @@
+.home {
+
+	.headshot-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 20px;
+		/* Adds spacing below the headshot */
+		padding: 1rem 0;
+		/* Adds top and bottom padding */
+	}
+
+	.headshot {
+		width: 150px;
+		border-radius: 50%;
+	}
+
+	h1 {
+		text-align: center;
+	}
+}
