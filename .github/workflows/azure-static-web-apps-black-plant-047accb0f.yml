@@ -25,7 +25,7 @@ jobs:
 
       - name: Load .env variables
         run: |
-          cat ./.env.development >> $GITHUB_ENV
+          cat ./.env.azureLive >> $GITHUB_ENV
         working-directory: ./web-playground-react
 
 
@@ -43,8 +43,7 @@ jobs:
         run: npm install
         working-directory: ./web-playground-react
       - name: Build app
-        #run: npx vite build --mode azureLive
-        run: npx vite build
+        run: npm run build
         working-directory: ./web-playground-react
       - name: Deploy
         id: deploy
