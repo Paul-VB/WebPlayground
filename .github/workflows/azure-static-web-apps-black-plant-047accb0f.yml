@@ -25,7 +25,7 @@ jobs:
 
       - name: Load .env variables
         run: |
-          cat ./.env.azureLive >> $GITHUB_ENV
+          cat ./.env.development >> $GITHUB_ENV
         working-directory: ./web-playground-react
 
 
