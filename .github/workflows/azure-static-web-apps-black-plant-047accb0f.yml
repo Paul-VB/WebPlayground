@@ -27,6 +27,12 @@ jobs:
       - name: List env files
         run: ls -la ./web-playground-react | grep .env
 
+      #gotta love microsoft for now doing something very basic... like loading the current env file
+      - name: Load .env.azureLive variables
+        run: |
+          cat ./.env.azureLive >> $GITHUB_ENV
+        working-directory: ./web-playground-react
+
 
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
