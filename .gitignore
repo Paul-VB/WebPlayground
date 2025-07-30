@@ -1,0 +1,45 @@
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+
+# Test results
+TestResults/
+*.TestResults
+
+# NuGet packages
+*.nupkg
+packages/
+project.lock.json
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# IDE settings
+.vscode/
+.idea/
+
+# Rider and Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Logs and cache
+*.log
+*.tlog
+*.cache
+*.pdb
+
+# Auto-generated files
+Generated_Code/
+
+# Publish output
+publish/
+
+# HTTP request files (optional)
+*.http
