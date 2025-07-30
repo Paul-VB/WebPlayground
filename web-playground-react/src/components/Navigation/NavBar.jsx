@@ -10,6 +10,7 @@ function Navbar() {
     <div className="navbar">
       <NavBarButton label="Home" onClick={() => navigate(ROUTES.home.path)} /> 
       <NavBarButton label="About" onClick={() => navigate(ROUTES.about.path)} />
+      <NavBarButton label="Ai" onClick={() => navigate(ROUTES.ai.path)} />
     </div>
   );
 }
