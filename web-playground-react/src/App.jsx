@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom';
+import { ROUTES } from './routes';
 import Navbar from './components/Navigation/NavBar';
-import Home from './pages/Home'
-import About from './pages/About'
 import './App.css'
 
 function App() {
@@ -10,10 +9,10 @@ function App() {
 		<>
 			<Navbar />
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/about" element={<About />} />
+				{Object.values(ROUTES).map((route) => (
+					<Route path={route.path} element={route.component} />
+				))}
 			</Routes>
-			{}
 		</>
 	)
 }

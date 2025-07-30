@@ -1,5 +1,6 @@
 import './NavBar.css';
 import NavBarButton from './NavBarButton';
+import { ROUTES } from 'src/routes.jsx';
 import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
@@ -7,8 +8,8 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <NavBarButton label="Home" onClick={() => navigate('/')} /> 
-      <NavBarButton label="About" onClick={() => navigate('/about')} />
+      <NavBarButton label="Home" onClick={() => navigate(ROUTES.home.path)} /> 
+      <NavBarButton label="About" onClick={() => navigate(ROUTES.about.path)} />
     </div>
   );
 }
