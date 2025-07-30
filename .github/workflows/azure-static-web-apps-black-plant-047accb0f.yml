@@ -22,7 +22,7 @@ jobs:
         with:
           submodules: true
           lfs: false
-        working-directory: ./web-playground-react
+
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
@@ -36,6 +36,7 @@ jobs:
       - name: Load .env variables
         run: |
           cat ./.env.azureLive >> $GITHUB_ENV
+        working-directory: ./web-playground-react
       - name: Install dependencies
         run: npm install
         working-directory: ./web-playground-react
