@@ -24,11 +24,8 @@ jobs:
           lfs: false
 
 
-      - name: List files at root
-        run: ls -la
-
-      - name: List files in React app folder
-        run: ls -la ./WebPlayground/web-playground-react
+      - name: List env files
+        run: ls -la ./web-playground-react | grep .env
 
 
       - name: Install OIDC Client from Core Package
