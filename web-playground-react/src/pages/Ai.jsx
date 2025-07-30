@@ -6,7 +6,6 @@ const Ai = () => {
 	const [chatState, updateChatState] = useState('');
 
     async function postMessage(message) {
-        const ollamaUrl = import.meta.env.VITE_OLLAMA_IP_ADDRESS;
 		var payload = {
 			model: 'gemma3',
 			messages: [{
@@ -15,7 +14,7 @@ const Ai = () => {
 			}]
 		};
 
-        const response = await fetch(`${ollamaUrl}/api/chat`, {
+        const response = await fetch(`${ollamaIp}/api/chat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -57,6 +56,7 @@ const Ai = () => {
     return (
         <div>
             <h1>Ai</h1>
+            <div>Ollama IP: {ollamaIp}</div>
             <div style={{ border: '1px solid #fff', minHeight: '100px', whiteSpace: 'pre-wrap' }}>
                 {chatState}
             </div>
