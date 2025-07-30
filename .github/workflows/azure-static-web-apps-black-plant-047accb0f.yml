@@ -23,12 +23,7 @@ jobs:
           submodules: true
           lfs: false
 
-
-      - name: List env files
-        run: ls -la ./web-playground-react | grep .env
-
-      #gotta love microsoft for now doing something very basic... like loading the current env file
-      - name: Load .env.azureLive variables
+      - name: Load .env variables
         run: |
           cat ./.env.azureLive >> $GITHUB_ENV
         working-directory: ./web-playground-react
@@ -48,7 +43,8 @@ jobs:
         run: npm install
         working-directory: ./web-playground-react
       - name: Build app
-        run: npx vite build --mode azureLive
+        #run: npx vite build --mode azureLive
+        run: npx vite build
         working-directory: ./web-playground-react
       - name: Deploy
         id: deploy
