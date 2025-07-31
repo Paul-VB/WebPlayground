@@ -17,7 +17,7 @@
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebPlayground.Api\WebPlayground.Api.csproj" />
+    <ProjectReference Include="..\WebPlayground.Core\WebPlayground.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

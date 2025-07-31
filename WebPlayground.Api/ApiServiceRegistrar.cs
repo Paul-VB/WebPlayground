@@ -1,8 +1,8 @@
-﻿using WebPlayground.Core.Services;
+﻿using WebPlayground.Core;
 
 namespace WebPlayground.Api
 {
-    public static class DependencyInjectionServiceRegistrar
+    public static class ApiServiceRegistrar
     {
         public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
@@ -11,7 +11,7 @@ namespace WebPlayground.Api
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            services.AddScoped<IOllamaService, OllamaService>();
+            CoreServiceRegistrar.RegisterServices(services, configuration);
         }
     }
 }

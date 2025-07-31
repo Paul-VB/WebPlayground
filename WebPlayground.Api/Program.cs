@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-DependencyInjectionServiceRegistrar.RegisterServices(builder.Services, builder.Configuration);
+ApiServiceRegistrar.RegisterServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
