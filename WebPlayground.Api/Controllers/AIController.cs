@@ -15,11 +15,17 @@ namespace WebPlayground.Api.Controllers
             _ollamaService = ollamaService;
         }
 
-        // Example endpoint for chat
         [HttpPost("chat")]
-        public IAsyncEnumerable<ChatResponse> Chat([FromBody] Message[] messages, [FromQuery] string model = "llama2", [FromQuery] bool stream = true)
+        public IAsyncEnumerable<ChatResponse> Chat([FromBody] ChatRequest request)
         {
-            return _ollamaService.Chat(model, messages, stream);
+            return _ollamaService.Chat(request);
+        }
+
+        // Simple GET method that returns a ContentResult
+        [HttpGet("test")]
+        public IActionResult GetContent()
+        {
+            return new OkObjectResult("test from ai");
         }
     }
 }

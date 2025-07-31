@@ -4,7 +4,7 @@ namespace WebPlayground.Core.Services
 {
     public interface IOllamaService
     {
-        IAsyncEnumerable<ChatResponse> Chat(string model, Message[] messages, bool stream = true);
+        IAsyncEnumerable<ChatResponse> Chat(ChatRequest request);
     }
 
     public class OllamaService : IOllamaService
@@ -12,7 +12,7 @@ namespace WebPlayground.Core.Services
         public OllamaService()
         {
         }
-        public IAsyncEnumerable<ChatResponse> Chat(string model, Message[] messages, bool stream = true)
+        public IAsyncEnumerable<ChatResponse> Chat(ChatRequest request)
         {
             throw new NotImplementedException();
         }
