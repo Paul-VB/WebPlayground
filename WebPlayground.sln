@@ -14,7 +14,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPlayground.Core", "WebPl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPlayground.FunctionApp", "WebPlayground.FunctionApp\WebPlayground.FunctionApp.csproj", "{509361CA-4E22-4A81-B82C-E046ACBA5638}"
 	ProjectSection(ProjectDependencies) = postProject
-		{D1E96970-FA9C-42C0-B561-27DB6940C123} = {D1E96970-FA9C-42C0-B561-27DB6940C123}
+		{9A9B63C8-0815-47E3-9C3A-3A37A7BA6241} = {9A9B63C8-0815-47E3-9C3A-3A37A7BA6241}
 	EndProjectSection
 EndProject
 Global

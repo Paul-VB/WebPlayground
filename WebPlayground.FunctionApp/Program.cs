@@ -1,6 +1,6 @@
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Hosting;
-using WebPlayground.FunctionApp;
+using WebPlayground.Api;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
