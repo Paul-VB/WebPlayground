@@ -2,6 +2,9 @@ namespace WebPlayground.Core.Models.Ollama
 {
     public class ChatResponse
     {
-        // Add properties as needed
+        public string Model { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public Message Message { get; set; }
+        public bool Done { get; set; }
     }
 }

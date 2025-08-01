@@ -14,7 +14,7 @@ const Ai = () => {
 			}]
 		};
 
-        const response = await fetch(`${ollamaIp}/api/chat`, {
+        const response = await fetch(`${ollamaIp}/ai/chat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

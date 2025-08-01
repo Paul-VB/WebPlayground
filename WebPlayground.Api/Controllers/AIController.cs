@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using WebPlayground.Core.Services;
 using WebPlayground.Core.Models.Ollama;
+using WebPlayground.Core.Services;
+using System.Threading.Tasks;
 
 namespace WebPlayground.Api.Controllers
 {
@@ -16,9 +17,11 @@ namespace WebPlayground.Api.Controllers
         }
 
         [HttpPost("chat")]
-        public IAsyncEnumerable<ChatResponse> Chat([FromBody] ChatRequest request)
+        public async Task Chat([FromBody] ChatRequest request)
         {
-            return _ollamaService.Chat(request);
+            Response.ContentType = "application/json";
+            using var stream = _ollamaService.Chat(request);
+            await stream.CopyToAsync(Response.Body);
         }
 
         // Simple GET method that returns a ContentResult
