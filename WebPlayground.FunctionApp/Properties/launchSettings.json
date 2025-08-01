@@ -3,6 +3,9 @@
     "WebPlayground.FunctionApp": {
       "commandName": "Project",
       "commandLineArgs": "--port 7297",
+      "environmentVariables": {
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
+      },
       "launchBrowser": false
     }
   }
