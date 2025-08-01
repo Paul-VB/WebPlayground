@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const Ai = () => {
-    const ollamaIp = import.meta.env.VITE_OLLAMA_IP_ADDRESS;
+    const ollamaUrl = `${import.meta.env.VITE_OLLAMA_IP_ADDRESS}/ai/chat`;
     const [currentUserMessageInputValue, updateUserMessageInputValue] = useState('');
 	const [chatState, updateChatState] = useState('');
 
@@ -14,12 +14,12 @@ const Ai = () => {
 			}]
 		};
 
-        const response = await fetch(`${ollamaIp}/ai/chat`, {
+        const response = await fetch(ollamaUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload) // <-- Fix: stringify the payload
+            body: JSON.stringify(payload)
         });
         return await response;
     }
@@ -29,15 +29,20 @@ const Ai = () => {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
 
-		appendToChatState('AI:', false); // Add a label for the assistant's response
+		appendToChatState('AI: ', false); 
 
 		while (true) {
 			var { value, done } = await reader.read();
 			if (done) break;
-			var chunk = JSON.parse(decoder.decode(value, { stream: true }));
-			appendToChatState(chunk.message.content, false); // Append chunk without newline
+			var chunkStr = decoder.decode(value, { stream: true });
+			try {
+				var chunk = JSON.parse(chunkStr);
+				appendToChatState(chunk.message.content, false);
+			} catch (e) {
+				console.log('Failed to parse part of stream response:', chunkStr);
+			}
 		}
-		appendToChatState('', true); // Ensure a newline after the AI response
+		appendToChatState('', true); 
     }
 
 	function appendToChatState(message, newline = true) {
@@ -56,7 +61,6 @@ const Ai = () => {
     return (
         <div>
             <h1>Ai</h1>
-            <div>Ollama IP: {ollamaIp}</div>
             <div style={{ border: '1px solid #fff', minHeight: '100px', whiteSpace: 'pre-wrap' }}>
                 {chatState}
             </div>
