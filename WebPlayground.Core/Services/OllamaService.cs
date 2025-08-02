@@ -1,8 +1,9 @@
-﻿using WebPlayground.Core.Models.Ollama;
-using WebPlayground.Core.Helpers;
-using System.Text.Json;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Text;
-using Microsoft.Extensions.Configuration;
+using System.Text.Json;
+using WebPlayground.Core.Helpers;
+using WebPlayground.Core.Models.Ollama;
 
 namespace WebPlayground.Core.Services
 {
@@ -24,9 +25,9 @@ namespace WebPlayground.Core.Services
 
         public Stream Chat(ChatRequest request)
         {
+            var url = _configurationManager["OllamaApiUrl"];
             try
             {
-                var url = _configurationManager["OllamaApiUrl"];
                 var json = JsonSerializer.Serialize(request);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var httpRequest = new HttpRequestMessage(HttpMethod.Post, url)
@@ -44,7 +45,7 @@ namespace WebPlayground.Core.Services
                     message = new
                     {
                         role = "system",
-                        content = "AI Agent cannot be reached. It might be offline"
+                        content = $"AI Agent cannot be reached. It might be offline. attempted to contact it at: {url}"
                     }
                 };
                 var offlineJson = JsonSerializer.Serialize(offlineMessage);
