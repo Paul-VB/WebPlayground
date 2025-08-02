@@ -35,11 +35,15 @@ const Ai = () => {
             var { value, done } = await reader.read();
             if (done) break;
             var chunkStr = decoder.decode(value, { stream: true });
-            try {
-                var chunk = JSON.parse(chunkStr);
-                appendToChatState(chunk.message.content, false);
-            } catch (e) {
-                console.log('Failed to parse part of stream response:', chunkStr);
+            var lines = chunkStr.split('\n');
+            for (let line of lines) {
+                if (line.trim() === '') continue;
+                try {
+                    var chunk = JSON.parse(line);
+                    appendToChatState(chunk.message.content, false);
+                } catch (e) {
+                    console.log('Failed to parse part of stream response:', line);
+                }
             }
         }
         appendToChatState('', true); 
