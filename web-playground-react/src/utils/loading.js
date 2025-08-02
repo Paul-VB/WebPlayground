@@ -1,4 +1,5 @@
 // Utility functions for loading state management will go here.
+import 'src/styles/loading.css';
 
 export function addLoadingOverlay(element) {
     if (element.classList.contains('loading')) return;

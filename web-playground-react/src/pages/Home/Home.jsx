@@ -1,6 +1,6 @@
 import React from 'react';
 import './Home.scss';
-import abe from '../assets/abe.jpg';
+import abe from 'src/assets/abe.jpg';
 
 function Home() {
 	return (

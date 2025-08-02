@@ -1,6 +1,6 @@
-import Home from './pages/Home';
-import About from './pages/About';
-import Ai from './pages/Ai';
+import Home from 'src/pages/Home/Home';
+import About from 'src/pages/About';
+import Ai from 'src/pages/Ai/Ai';
 
 export const ROUTES = {
   home: { path: '/', name: 'Home', component: <Home /> },
