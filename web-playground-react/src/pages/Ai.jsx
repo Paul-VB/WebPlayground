@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { addLoadingOverlay, removeLoadingOverlay  } from 'src/utils/loading';
 
 const Ai = () => {
     const ollamaUrl = `${import.meta.env.VITE_API_URL}/ai/chat`;
@@ -56,9 +57,16 @@ const Ai = () => {
     async function handleSendMessage(event) {
         if (event.key === 'Enter' && document.activeElement === event.currentTarget) {
             appendToChatState(`User: ${currentUserMessageInputValue}`);
-            var response = await postMessage(currentUserMessageInputValue);
+            var message = currentUserMessageInputValue;
             updateUserMessageInputValue(''); 
-            processResponse(response);
+            const input = document.getElementById('userMessageInputContainer');
+            try {
+                addLoadingOverlay(input);
+                var response = await postMessage(message);
+                await processResponse(response);
+            } finally {
+                removeLoadingOverlay(input);
+            }
         }
     }
 
@@ -68,13 +76,15 @@ const Ai = () => {
             <div style={{ border: '1px solid #fff', minHeight: '100px', whiteSpace: 'pre-wrap' }}>
                 {chatState}
             </div>
-            <input
-                type="text"
-                placeholder="Type your message..."
-                value={currentUserMessageInputValue}
-                onChange={e => updateUserMessageInputValue(e.target.value)}
-                onKeyDown={handleSendMessage}
-            />
+			<div id="userMessageInputContainer" style={{ display: 'inline-block' }}>
+				<input
+					type="text"
+					placeholder="Type your message..."
+					value={currentUserMessageInputValue}
+					onChange={e => updateUserMessageInputValue(e.target.value)}
+					onKeyDown={handleSendMessage}
+				/>
+			</div>
         </div>
     );
 };
