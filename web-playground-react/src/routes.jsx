@@ -1,5 +1,5 @@
 import Home from 'src/pages/Home/Home';
-import About from 'src/pages/About';
+import About from 'src/pages/About/About';
 import Ai from 'src/pages/Ai/Ai';
 
 export const ROUTES = {
