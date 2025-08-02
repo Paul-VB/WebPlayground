@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+	
+    {
+      "name": "Launch Firefox",
+      "type": "firefox",
+      "request": "launch",
+      "preLaunchTask": "Start npm dev server",
+      "postDebugTask": "Kill npm dev server",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}"
+    }
+  ],
+  "compounds": []
+}
