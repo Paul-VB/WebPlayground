@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
 const Ai = () => {
-    const ollamaUrl = `${import.meta.env.VITE_OLLAMA_IP_ADDRESS}/ai/chat`;
+    const ollamaUrl = `${import.meta.env.VITE_API_URL}/ai/chat`;
     const [currentUserMessageInputValue, updateUserMessageInputValue] = useState('');
-	const [chatState, updateChatState] = useState('');
+    const [chatState, updateChatState] = useState('');
 
     async function postMessage(message) {
-		var payload = {
-			model: 'gemma3',
-			messages: [{
-				role: 'user',
-				content: message
-			}]
-		};
+        var payload = {
+            model: 'gemma3',
+            messages: [{
+                role: 'user',
+                content: message
+            }]
+        };
 
         const response = await fetch(ollamaUrl, {
             method: 'POST',
@@ -29,32 +29,32 @@ const Ai = () => {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
 
-		appendToChatState('AI: ', false); 
+        appendToChatState('AI: ', false); 
 
-		while (true) {
-			var { value, done } = await reader.read();
-			if (done) break;
-			var chunkStr = decoder.decode(value, { stream: true });
-			try {
-				var chunk = JSON.parse(chunkStr);
-				appendToChatState(chunk.message.content, false);
-			} catch (e) {
-				console.log('Failed to parse part of stream response:', chunkStr);
-			}
-		}
-		appendToChatState('', true); 
+        while (true) {
+            var { value, done } = await reader.read();
+            if (done) break;
+            var chunkStr = decoder.decode(value, { stream: true });
+            try {
+                var chunk = JSON.parse(chunkStr);
+                appendToChatState(chunk.message.content, false);
+            } catch (e) {
+                console.log('Failed to parse part of stream response:', chunkStr);
+            }
+        }
+        appendToChatState('', true); 
     }
 
-	function appendToChatState(message, newline = true) {
-		updateChatState(prevState => prevState + message + (newline ? '\n' : ''));
-	}
+    function appendToChatState(message, newline = true) {
+        updateChatState(prevState => prevState + message + (newline ? '\n' : ''));
+    }
 
     async function handleSendMessage(event) {
         if (event.key === 'Enter' && document.activeElement === event.currentTarget) {
-			appendToChatState(`User: ${currentUserMessageInputValue}`);
-			var response = await postMessage(currentUserMessageInputValue);
-			updateUserMessageInputValue(''); 
-			processResponse(response);
+            appendToChatState(`User: ${currentUserMessageInputValue}`);
+            var response = await postMessage(currentUserMessageInputValue);
+            updateUserMessageInputValue(''); 
+            processResponse(response);
         }
     }
 
