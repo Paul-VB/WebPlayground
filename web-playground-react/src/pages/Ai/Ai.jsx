@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { addLoadingOverlay, removeLoadingOverlay  } from 'src/utils/loading';
+import './Ai.scss';
 
 const Ai = () => {
     const ollamaUrl = `${import.meta.env.VITE_API_URL}/ai/chat`;
@@ -71,20 +72,23 @@ const Ai = () => {
     }
 
     return (
-        <div>
+        <div className="ai">
             <h1>Ai</h1>
-            <div style={{ border: '1px solid #fff', minHeight: '100px', whiteSpace: 'pre-wrap' }}>
-                {chatState}
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '10px' }}> 
+                <div className="chat-container">
+                    {chatState}
+                </div>
+                <div id="userMessageInputContainer" style={{ display: 'inline-block', width: 'auto', alignSelf: 'flex-start' }}> 
+					{/* todo: clean this up. make loadihg more universal */}
+                    <input
+                        type="text"
+                        placeholder="Type your message..."
+                        value={currentUserMessageInputValue}
+                        onChange={e => updateUserMessageInputValue(e.target.value)}
+                        onKeyDown={handleSendMessage}
+                    />
+                </div>
             </div>
-			<div id="userMessageInputContainer" style={{ display: 'inline-block' }}>
-				<input
-					type="text"
-					placeholder="Type your message..."
-					value={currentUserMessageInputValue}
-					onChange={e => updateUserMessageInputValue(e.target.value)}
-					onKeyDown={handleSendMessage}
-				/>
-			</div>
         </div>
     );
 };
