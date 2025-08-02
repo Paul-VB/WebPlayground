@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const Ai = () => {
-    const ollamaUrl = `${import.meta.env.VITE_OLLAMA_IP_ADDRESS}/api/ai/chat`;
+    const ollamaUrl = `${import.meta.env.VITE_OLLAMA_IP_ADDRESS}/ai/chat`;
     const [currentUserMessageInputValue, updateUserMessageInputValue] = useState('');
 	const [chatState, updateChatState] = useState('');
 
