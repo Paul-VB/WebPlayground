@@ -25,7 +25,7 @@ namespace WebPlayground.Core.Services
 
         public Stream Chat(ChatRequest request)
         {
-            var url = _configurationManager["OllamaApiUrl"];
+            var url = $"{_configurationManager["OllamaApiUrl"]}/api/chat";
             try
             {
                 var json = JsonSerializer.Serialize(request);
