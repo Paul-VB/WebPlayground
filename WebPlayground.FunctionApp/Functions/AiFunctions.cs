@@ -23,8 +23,25 @@ namespace WebPlayground.FunctionApp.Functions
 
             response.Headers.Add("Content-Type", "application/json");
             var request = DeserializeHttpRequestData<ChatRequest>(req);
-            using var stream = _ollamaService.Chat(request);
-            await stream.CopyToAsync(response.Body);
+            try
+            {
+                using var stream = _ollamaService.Chat(request);
+                await stream.CopyToAsync(response.Body);
+            }
+            catch (Exception ex)
+            {
+                var url = Environment.GetEnvironmentVariable("OllamaApiUrl") + "/api/chat";
+                var offlineMessage = new
+                {
+                    message = new
+                    {
+                        role = "system",
+                        content = $"AI Agent cannot be reached. It might be offline."
+                    }
+                };
+                var offlineJson = JsonSerializer.Serialize(offlineMessage);
+                await response.WriteStringAsync(offlineJson);
+            }
 
             return response;
         }

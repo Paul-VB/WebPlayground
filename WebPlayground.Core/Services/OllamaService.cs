@@ -26,31 +26,15 @@ namespace WebPlayground.Core.Services
         public Stream Chat(ChatRequest request)
         {
             var url = $"{_configurationManager["OllamaApiUrl"]}/api/chat";
-            try
+            var json = JsonSerializer.Serialize(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var httpRequest = new HttpRequestMessage(HttpMethod.Post, url)
             {
-                var json = JsonSerializer.Serialize(request);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var httpRequest = new HttpRequestMessage(HttpMethod.Post, url)
-                {
-                    Content = content
-                };
-                var response = _httpClientWrapper.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).Result;
-                response.EnsureSuccessStatusCode();
-                return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
-            }
-            catch (Exception ex)
-            {
-                var offlineMessage = new
-                {
-                    message = new
-                    {
-                        role = "system",
-                        content = $"AI Agent cannot be reached. It might be offline. attempted to contact it at: {url}. {ex.Message} ||| {ex.StackTrace}"
-                    }
-                };
-                var offlineJson = JsonSerializer.Serialize(offlineMessage);
-                return new MemoryStream(Encoding.UTF8.GetBytes(offlineJson));
-            }
+                Content = content
+            };
+            var response = _httpClientWrapper.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).Result;
+            response.EnsureSuccessStatusCode();
+            return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
         }
     }
 }
