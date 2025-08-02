@@ -38,14 +38,14 @@ namespace WebPlayground.Core.Services
                 response.EnsureSuccessStatusCode();
                 return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
             }
-            catch
+            catch (Exception ex)
             {
                 var offlineMessage = new
                 {
                     message = new
                     {
                         role = "system",
-                        content = $"AI Agent cannot be reached. It might be offline. attempted to contact it at: {url}"
+                        content = $"AI Agent cannot be reached. It might be offline. attempted to contact it at: {url}. {ex.Message} ||| {ex.StackTrace}"
                     }
                 };
                 var offlineJson = JsonSerializer.Serialize(offlineMessage);
