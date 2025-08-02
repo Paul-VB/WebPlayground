@@ -2,6 +2,7 @@
 using WebPlayground.Core.Helpers;
 using System.Text.Json;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace WebPlayground.Core.Services
 {
@@ -13,20 +14,22 @@ namespace WebPlayground.Core.Services
     public class OllamaService : IOllamaService
     {
         private readonly IHttpClientWrapper _httpClientWrapper;
-        private const string OllamaApiUrl = "http://localhost:11434/api/chat";
+        private readonly IConfigurationManager _configurationManager;
 
-        public OllamaService(IHttpClientWrapper httpClientWrapper)
+        public OllamaService(IHttpClientWrapper httpClientWrapper, IConfigurationManager configurationManager)
         {
             _httpClientWrapper = httpClientWrapper;
+            _configurationManager = configurationManager;
         }
 
         public Stream Chat(ChatRequest request)
         {
             try
             {
+                var url = _configurationManager["OllamaApiUrl"];
                 var json = JsonSerializer.Serialize(request);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var httpRequest = new HttpRequestMessage(HttpMethod.Post, OllamaApiUrl)
+                var httpRequest = new HttpRequestMessage(HttpMethod.Post, url)
                 {
                     Content = content
                 };

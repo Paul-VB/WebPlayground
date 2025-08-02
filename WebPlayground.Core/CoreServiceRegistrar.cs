@@ -9,6 +9,7 @@ namespace WebPlayground.Core
     {
         public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddSingleton((IConfigurationManager)configuration);
             services.AddHttpClient<IHttpClientWrapper, HttpClientWrapper>();
             services.AddScoped<IOllamaService, OllamaService>();
         }
