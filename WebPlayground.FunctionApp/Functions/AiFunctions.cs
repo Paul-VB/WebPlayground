@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.Text;
@@ -14,6 +15,14 @@ namespace WebPlayground.FunctionApp.Functions
         public AiFunctions(IOllamaService ollamaService)
         {
             _ollamaService = ollamaService;
+        }
+
+        [Function("ChatFunction2")]
+        public async Task Chat2([HttpTrigger(AuthorizationLevel.Function, "post" , "options", Route = "ai/chat2")] HttpRequest req)
+        {
+            var request = await req.ReadFromJsonAsync<ChatRequest>();
+            using var stream = _ollamaService.Chat(request);
+            await stream.CopyToAsync(req.HttpContext.Response.Body);
         }
 
         [Function("ChatFunction")]
