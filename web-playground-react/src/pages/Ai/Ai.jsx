@@ -3,7 +3,7 @@ import { addLoadingOverlay, removeLoadingOverlay  } from 'src/utils/loading';
 import './Ai.scss';
 
 const Ai = () => {
-    const ollamaUrl = `${import.meta.env.VITE_API_URL}/ai/chat2`;
+    const ollamaUrl = `${import.meta.env.VITE_API_URL}/ai/chat`;
     const [currentUserMessageInputValue, updateUserMessageInputValue] = useState('');
     const [chatState, updateChatState] = useState('');
 
