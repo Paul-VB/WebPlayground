@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
-                    "https://black-plant-047accb0f.1.azurestaticapps.net/"
+                    "https://black-plant-047accb0f.1.azurestaticapps.net"
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod();
