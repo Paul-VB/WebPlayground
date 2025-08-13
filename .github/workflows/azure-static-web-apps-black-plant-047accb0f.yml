@@ -1,13 +1,14 @@
 name: Azure Static Web Apps CI/CD
 
 on:
-  push:
-    branches:
-      - AzureLive
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - AzureLive
+  workflow_dispatch:
+#  push:
+#    branches:
+#      - AzureLive
+#  pull_request:
+#    types: [opened, synchronize, reopened, closed]
+#    branches:
+#      - AzureLive
 
 jobs:
   build_and_deploy_job:
