@@ -3,7 +3,7 @@
   "configurations": [
 	
     {
-      "name": "Launch Firefox",
+      "name": "Launch Firefox (VS Code only)",
       "type": "firefox",
       "request": "launch",
       "preLaunchTask": "Start npm dev server",
