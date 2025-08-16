@@ -32,9 +32,19 @@ namespace WebPlayground.Core.Services
             {
                 Content = content
             };
-            var response = _httpClientWrapper.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).Result;
-            response.EnsureSuccessStatusCode();
-            return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+            HttpResponseMessage response;
+            try
+            {
+                response = _httpClientWrapper.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).Result;
+                response.EnsureSuccessStatusCode();
+                return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (you can use any logging framework you prefer)
+                Console.WriteLine($"Error occurred while calling Ollama API: {ex.Message}");
+                throw;
+            }
         }
     }
 }
