@@ -22,6 +22,12 @@ jobs:
       - name: Set lowercase repository name
         run: echo "GITHUB_REPOSITORY_LOWERCASE=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
+      - name: Create unique Docker tag
+        run: |
+          UTC_DATE=$(date -u +"%Y-%m-%d_%H:%M:%S")
+          SHORT_SHA=$(echo "${GITHUB_SHA}" | tail -c 7)
+          echo "DOCKER_TAG=${UTC_DATE}--${SHORT_SHA}" >> $GITHUB_ENV
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -38,4 +44,4 @@ jobs:
           context: .
           file: ./WebPlayground.Api/Dockerfile
           push: true
-          tags: ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:latest
+            tags: ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ env.DOCKER_TAG }}
