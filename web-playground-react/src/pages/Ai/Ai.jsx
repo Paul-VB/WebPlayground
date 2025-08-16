@@ -4,7 +4,7 @@ import { ChatInput, useChatInput } from './ChatInput';
 
 const Ai = () => {
 	const ollamaUrl = `${import.meta.env.VITE_API_URL}/ai/chat`;
-	const chatState = useChatHistory();
+	const chatHistory = useChatHistory();
 	const chatInput = useChatInput(handleSendMessage);
 
 	async function handleSendMessage() {
@@ -12,21 +12,21 @@ const Ai = () => {
 			role: 'user',
 			content: chatInput.value
 		}
-		chatState.appendMessage(message);
+		chatHistory.appendMessage(message);
 		chatInput.value = '';
 		try {
-			chatInput.addLoadingOverlay();
+			chatInput.isLoading = true;
 			var response = await postMessages();
 			await processResponse(response);
 		} finally {
-			chatInput.removeLoadingOverlay();
+			chatInput.isLoading = false;
 		}
 	}
 
 	async function postMessages() {
 		var payload = {
 			model: 'gemma3',
-			messages: chatState.messages,
+			messages: chatHistory.messages,
 			stream: true
 		};
 		console.log('Posting payload:', payload);
@@ -56,9 +56,9 @@ const Ai = () => {
 					role: chunk.message.role,
 					content: chunk.message.content
 				}
-				chatState.appendMessage(partialMessage);
+				chatHistory.appendMessage(partialMessage);
 			} else {
-				chatState.appendLastMessage(chunk.message.content);
+				chatHistory.appendLastMessage(chunk.message.content);
 			}
 		}
 	}
@@ -67,7 +67,7 @@ const Ai = () => {
 		<div className="ai">
 			<h1>Ai</h1>
 			<div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '10px' }}>
-				<ChatHistory instance={chatState} />
+				<ChatHistory instance={chatHistory} />
 				<ChatInput instance={chatInput} />
 			</div>
 		</div>
