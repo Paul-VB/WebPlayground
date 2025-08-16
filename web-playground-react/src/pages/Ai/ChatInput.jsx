@@ -8,14 +8,25 @@ const ChatInput = ({ instance }) => {
 		}
 	}
 	return (
-<div className={`loading-container ${instance.isLoading ? 'loading' : ''}`}>
-			<textarea
-				placeholder="Type your message..."
-				value={instance.value}
-				onChange={e => instance.value = e.target.value}
-				onKeyDown={handleKeyDown}
-				rows={3}
-			/>
+		<div>
+			<div className={`loading-container ${instance.isLoading ? 'loading' : ''}`}>
+				<textarea
+					placeholder="Type your message..."
+					value={instance.value}
+					onChange={e => instance.value = e.target.value}
+					onKeyDown={handleKeyDown}
+					rows={3}
+				/>
+			</div>
+			<div>
+				<input
+					type="checkbox"
+					checked={instance.shouldStream}
+					onChange={e => instance.shouldStream = e.target.checked}
+					id="shouldStreamCheckbox"
+				/>
+				<label htmlFor="shouldStreamCheckbox">Stream response</label>
+			</div>
 		</div>
 	);
 };
@@ -24,6 +35,7 @@ function useChatInput(onSend) {
 	return PIANO({
 		value: '',
 		isLoading: false,
+		shouldStream: true,
 		onSend: onSend,
 	});
 }

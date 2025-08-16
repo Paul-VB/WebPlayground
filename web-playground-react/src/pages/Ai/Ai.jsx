@@ -27,7 +27,7 @@ const Ai = () => {
 		var payload = {
 			model: 'gemma3',
 			messages: chatHistory.messages,
-			stream: true
+			stream: chatInput.shouldStream
 		};
 		const response = await fetch(ollamaUrl, {
 			method: 'POST',
