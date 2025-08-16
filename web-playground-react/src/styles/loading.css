@@ -1,8 +1,12 @@
 /* Loading overlay and spinner styles */
 
+.loading-container {
+  width: fit-content;
+  position: relative;
+}
+
 .loading {
   pointer-events: none;
-  position: relative;
 }
 
 .loading::before {
