@@ -2,9 +2,13 @@ name: Docker Deploy Workflow
 
 on:
   workflow_dispatch:
-  #push:
-  #  branches:
-  #    - dockerTest
+  push:
+    branches:
+      - AzureLive
+  pull_request:
+    types: closed
+    branches:
+      - AzureLive
 
 permissions:
   contents: read
@@ -12,6 +16,7 @@ permissions:
 
 jobs:
   build-and-push:
+   if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     steps:
       - name: Set lowercase repository name
