@@ -29,7 +29,6 @@ const Ai = () => {
 			messages: chatHistory.messages,
 			stream: true
 		};
-		console.log('Posting payload:', payload);
 		const response = await fetch(ollamaUrl, {
 			method: 'POST',
 			headers: {
@@ -45,11 +44,26 @@ const Ai = () => {
 		const reader = response.body.getReader();
 		const decoder = new TextDecoder();
 
+		function tryParseChunk(readerValue){
+			let chunkJson = null;
+			let chunk = null;
+			try {
+				chunkJson = decoder.decode(readerValue, { stream: false });
+				chunk = JSON.parse(chunkJson);
+			} catch (error) {
+				console.error('Error decoding chunk:', error, '\nRaw reader value:', readerValue);
+				return null; // Skip this chunk if decoding fails
+			}
+			return chunk;
+		}
+
 		let partialMessage = null;
 		while (true) {
 			var { value, done } = await reader.read();
 			if (done) break;
-			var chunk = JSON.parse(decoder.decode(value, { stream: false }));
+
+			var chunk = tryParseChunk(value);
+			if (!chunk) continue; // Skip invalid chunks
 
 			if (partialMessage === null) {
 				partialMessage = {
