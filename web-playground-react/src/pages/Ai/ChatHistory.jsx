@@ -1,10 +1,17 @@
 import { PIANO } from 'src/utils/piano';
+import 'github-markdown-css';
+import './ChatHistory.scss';
+import ReactMarkdown from 'react-markdown';
 const ChatHistory = ({ instance }) => {
 	return (
 		<div className="chat-container">
 			{instance.messages.map((msg, index) => (
 				<div key={index}>
-					<strong>{msg.role}:</strong> {msg.content}
+					<strong>{msg.role}:</strong>
+
+					<div className="markdown-body">
+						<ReactMarkdown>{msg.content}</ReactMarkdown>
+					</div>
 				</div>
 			))}
 		</div>
