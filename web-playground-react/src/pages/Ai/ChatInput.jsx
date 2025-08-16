@@ -33,22 +33,4 @@ function useChatInput(onSend) {
 	});
 }
 
-class ChatInput {
-    value = '';
-    onSend = null;
-    
-    constructor(onSend) {
-        this.onSend = onSend;
-    }
-    
-    addLoadingOverlay() {
-        // todo
-    }
-    
-    removeLoadingOverlay() {
-        // todo
-    }
-}
-
-
 export { ChatInput, useChatInput };
