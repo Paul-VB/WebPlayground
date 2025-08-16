@@ -2,17 +2,17 @@ name: Azure Static Web Apps CI/CD
 
 on:
   workflow_dispatch:
-#  push:
-#    branches:
-#      - AzureLive
-#  pull_request:
-#    types: [opened, synchronize, reopened, closed]
-#    branches:
-#      - AzureLive
+  push:
+    branches:
+      - AzureLive
+  pull_request:
+    types: closed
+    branches:
+      - AzureLive
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     permissions:

@@ -1,0 +1,7 @@
+services:
+  webplayground.api:
+    image: ${DOCKER_REGISTRY-}webplaygroundapi
+    container_name: webplayground.api
+    build:
+      context: .
+      dockerfile: WebPlayground.Api/Dockerfile
