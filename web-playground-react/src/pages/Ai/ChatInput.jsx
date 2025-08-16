@@ -1,5 +1,4 @@
 import { PIANO } from 'src/utils/piano';
-import { addLoadingOverlay, removeLoadingOverlay } from 'src/utils/loading';
 
 const ChatInput = ({ instance }) => {
 	function handleKeyDown(event) {
@@ -26,12 +25,6 @@ function useChatInput(onSend) {
 		value: '',
 		isLoading: false,
 		onSend: onSend,
-		addLoadingOverlay: function () {
-			//todo
-		},
-		removeLoadingOverlay: function () {
-			//todo
-		}
 	});
 }
 
