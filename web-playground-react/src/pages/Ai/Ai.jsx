@@ -1,6 +1,7 @@
 import './Ai.scss';
 import { ChatHistory, useChatHistory } from './ChatHistory';
 import { ChatInput, useChatInput } from './ChatInput';
+import { ReadNdjsonStream } from 'src/utils/ndjsonStreamReader';
 
 const Ai = () => {
 	const ollamaUrl = `${import.meta.env.VITE_API_URL}/ai/chat`;
@@ -41,30 +42,9 @@ const Ai = () => {
 
 	async function processResponse(response) {
 		if (!response.body) return;
-		const reader = response.body.getReader();
-		const decoder = new TextDecoder();
-
-		function tryParseChunk(readerValue){
-			let chunkJson = null;
-			let chunk = null;
-			try {
-				chunkJson = decoder.decode(readerValue, { stream: false });
-				chunk = JSON.parse(chunkJson);
-			} catch (error) {
-				console.error('Error decoding chunk:', error, '\nRaw reader value:', readerValue);
-				return null; // Skip this chunk if decoding fails
-			}
-			return chunk;
-		}
-
+		
 		let partialMessage = null;
-		while (true) {
-			var { value, done } = await reader.read();
-			if (done) break;
-
-			var chunk = tryParseChunk(value);
-			if (!chunk) continue; // Skip invalid chunks
-
+		for await (const chunk of ReadNdjsonStream(response.body)) {
 			if (partialMessage === null) {
 				partialMessage = {
 					role: chunk.message.role,
