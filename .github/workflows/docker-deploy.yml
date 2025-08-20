@@ -62,4 +62,4 @@ jobs:
           az containerapp update \
             --name webplayground-api \
             --resource-group WebPlayground_group \
-            --set-image ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ env.DOCKER_TAG }}
+            --image ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ env.DOCKER_TAG }}
