@@ -3,12 +3,12 @@ name: Docker Deploy Workflow
 on:
   workflow_dispatch:
   push:
-    branches:
-      - AzureLive
-  pull_request:
-    types: closed
-    branches:
-      - AzureLive
+  #   branches:
+  #     - AzureLive
+  # pull_request:
+  #   types: closed
+  #   branches:
+  #     - AzureLive
 
 permissions:
   contents: read
