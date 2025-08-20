@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import useGetState from 'src/utils/useGetState';
+import './AiModelSelector.scss';
 
 const AiModelSelector = ({ instance }) => {
 	return (
-		<div>
-			<label htmlFor="ai-model-select">Select AI Model:</label>
+		<div className="ai-model-selector">
+			<div>
+				<label htmlFor="ai-model-select">Select AI Model</label>
+			</div>
 			<select
 				id="ai-model-select"
 				value={instance.selectedModel.model}

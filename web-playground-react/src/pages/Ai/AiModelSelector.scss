@@ -1,0 +1,17 @@
+.ai-model-selector select option:checked {
+  background-color: #1571bb;
+  color: inherit;
+}
+
+.ai-model-selector label {
+  font-weight: bold;
+}
+
+.ai-model-selector select {
+  border-radius: 4px;
+  border: 0px;
+  padding: 5px;
+  color: inherit;
+  font-size: 1rem;
+  background-color: rgb(73, 73, 73);
+}
