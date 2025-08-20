@@ -56,4 +56,4 @@ jobs:
             --name webplayground-api \
             --resource-group WebPlayground_group \
             --image ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:latest
-            --revision-suffix r${{ github.run_id }}  
+            --revision-suffix "rev${{ github.run_number }}"
