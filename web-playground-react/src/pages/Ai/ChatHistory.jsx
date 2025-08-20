@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import 'github-markdown-css';
 import './ChatHistory.scss';
 import ReactMarkdown from 'react-markdown';
-import useGetState from '../../utils/useGetState';
+import useGetState from 'src/utils/useGetState';
 const ChatHistory = ({ instance }) => {
 	instance.ref = useRef(null);
 
