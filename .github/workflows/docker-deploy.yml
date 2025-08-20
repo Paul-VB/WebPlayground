@@ -46,7 +46,7 @@ jobs:
           file: ./WebPlayground.Api/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:{{ env.DOCKER_TAG }}
+            ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ env.DOCKER_TAG }}
             ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:latest
           labels: |
             org.opencontainers.image.created=${{ env.UTC_DATE }}
@@ -62,4 +62,4 @@ jobs:
           az containerapp update \
             --name webplayground-api \
             --resource-group WebPlayground_group \
-            --set-image ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:{{ env.DOCKER_TAG }}
+            --set-image ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ env.DOCKER_TAG }}
