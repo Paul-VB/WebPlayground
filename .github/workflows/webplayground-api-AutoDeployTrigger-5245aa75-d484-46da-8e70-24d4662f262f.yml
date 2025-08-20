@@ -8,7 +8,7 @@ on:
       [ AzureLive ]
     paths:
     - '**'
-    - '.github/workflows/webplayground-api-AutoDeployTrigger-e1ac2d10-f245-46b2-aee6-7475ae22f9c0.yml'
+    - '.github/workflows/webplayground-api-AutoDeployTrigger-5245aa75-d484-46da-8e70-24d4662f262f.yml'
 
   # Allow manual trigger 
   workflow_dispatch:      
