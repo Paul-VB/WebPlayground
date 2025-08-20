@@ -25,7 +25,7 @@ jobs:
 
       - name: Create unique Docker tag
         run: |
-          UTC_DATE=$(date -u +"%Y-%m-%d_%H:%M:%S")
+          UTC_DATE=$(date -u +"%Y-%m-%d_%H.%M.%S")
           SHORT_SHA=$(echo "${GITHUB_SHA}" | tail -c 7)
           echo "DOCKER_TAG=${UTC_DATE}--${SHORT_SHA}" >> $GITHUB_ENV
 
