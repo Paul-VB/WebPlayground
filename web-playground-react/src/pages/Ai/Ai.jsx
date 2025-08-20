@@ -1,6 +1,6 @@
 import './Ai.scss';
-import { ChatHistory, useChatHistory } from './ChatHistory';
-import { ChatInput, useChatInput } from './ChatInput';
+import ChatHistory, { useChatHistory } from './ChatHistory';
+import ChatInput, { useChatInput } from './ChatInput';
 import { ReadNdjsonStream } from 'src/utils/ndjsonStreamReader';
 
 const Ai = () => {
@@ -14,20 +14,22 @@ const Ai = () => {
 			content: chatInput.value
 		}
 		chatHistory.appendMessage(message);
-		chatInput.value = '';
+		chatInput.setValue('');
 		try {
-			chatInput.isLoading = true;
+			chatInput.setIsLoading(true);
 			var response = await postMessages();
 			await processResponse(response);
+		} catch (error) {
+			console.error('Error sending message:', error);		
 		} finally {
-			chatInput.isLoading = false;
+			chatInput.setIsLoading(false);
 		}
 	}
 
 	async function postMessages() {
 		var payload = {
 			model: 'gemma3',
-			messages: chatHistory.messages,
+			messages: chatHistory.getMessages(),
 			stream: chatInput.shouldStream
 		};
 		const response = await fetch(ollamaUrl, {

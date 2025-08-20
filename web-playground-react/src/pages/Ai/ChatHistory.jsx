@@ -1,11 +1,20 @@
-import { PIANO } from 'src/utils/piano';
+import { useEffect, useRef } from 'react';
 import 'github-markdown-css';
 import './ChatHistory.scss';
 import ReactMarkdown from 'react-markdown';
+import useGetState from '../../utils/useGetState';
 const ChatHistory = ({ instance }) => {
+	instance.ref = useRef(null);
+
+	useEffect(() => {
+		if (instance.ref.current) {
+			instance.ref.current.scrollTop = instance.ref.current.scrollHeight;
+		}
+	}, [instance.messages]);
+
 	return (
-		<div className="chat-container">
-			{instance.messages.map((msg, index) => (
+		<div className="chat-container" ref={instance.ref}>
+			{instance.getMessages().map((msg, index) => (
 				<div key={index}>
 					<strong>{msg.role}:</strong>
 
@@ -19,15 +28,26 @@ const ChatHistory = ({ instance }) => {
 };
 
 function useChatHistory() {
-	return PIANO({
-		messages: [],
-		appendMessage: function (message) {
-			this.messages.push(message);
-		},
-		appendLastMessage: function (newContent) {
-			const lastMessage = this.messages[this.messages.length - 1];
+	const [messages, setMessages, getMessages] = useGetState([]);
+	function appendMessage(message) {
+		setMessages(prev => [...prev, message]);
+	}
+	function appendLastMessage(newContent) {
+		setMessages(prev => {
+			if (prev.length === 0) return prev;
+
+			const updatedMessages = [...prev];
+			// Copy the last message and update its content
+			const lastIndex = updatedMessages.length - 1;
+			const lastMessage = { ...updatedMessages[lastIndex] };
 			lastMessage.content += newContent;
-		}
-	});
+
+			// Replace the last message in the array
+			updatedMessages[lastIndex] = lastMessage;
+			return updatedMessages;
+		});
+	}
+	return { messages, setMessages, getMessages, appendMessage, appendLastMessage };
 }
-export { ChatHistory, useChatHistory };
+export default ChatHistory;
+export { useChatHistory };

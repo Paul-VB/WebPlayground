@@ -1,4 +1,4 @@
-import { PIANO } from 'src/utils/piano';
+import { useState } from 'react';
 
 const ChatInput = ({ instance }) => {
 	function handleKeyDown(event) {
@@ -13,7 +13,7 @@ const ChatInput = ({ instance }) => {
 				<textarea
 					placeholder="Type your message..."
 					value={instance.value}
-					onChange={e => instance.value = e.target.value}
+					onChange={e => instance.setValue(e.target.value)}
 					onKeyDown={handleKeyDown}
 					rows={3}
 				/>
@@ -22,7 +22,7 @@ const ChatInput = ({ instance }) => {
 				<input
 					type="checkbox"
 					checked={instance.shouldStream}
-					onChange={e => instance.shouldStream = e.target.checked}
+					onChange={e => instance.setShouldStream(e.target.checked)}
 					id="shouldStreamCheckbox"
 				/>
 				<label htmlFor="shouldStreamCheckbox">Stream response</label>
@@ -32,12 +32,11 @@ const ChatInput = ({ instance }) => {
 };
 
 function useChatInput(onSend) {
-	return PIANO({
-		value: '',
-		isLoading: false,
-		shouldStream: true,
-		onSend: onSend,
-	});
+	const [value, setValue] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+	const [shouldStream, setShouldStream] = useState(true);
+	return { value, setValue, isLoading, setIsLoading, shouldStream, setShouldStream, onSend };
 }
 
-export { ChatInput, useChatInput };
+export default ChatInput;
+export { useChatInput };
