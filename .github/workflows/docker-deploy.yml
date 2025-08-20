@@ -55,5 +55,4 @@ jobs:
           az containerapp update \
             --name webplayground-api \
             --resource-group WebPlayground_group \
-            --image ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:latest
-            --revision-suffix "rev${{ github.run_number }}"
+            --set-image ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:latest
