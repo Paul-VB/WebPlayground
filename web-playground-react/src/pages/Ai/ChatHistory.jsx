@@ -13,9 +13,9 @@ const ChatHistory = ({ instance }) => {
 	}, [instance.messages]);
 
 	return (
-		<div className="chat-container" ref={instance.ref}>
+		<div className="chat-history-container" ref={instance.ref}>
 			{instance.getMessages().map((msg, index) => (
-				<div key={index}>
+				<div key={index} className="chat-message-container" data-role={msg.role}>
 					<strong>{msg.role}:</strong>
 
 					<div className="markdown-body">
