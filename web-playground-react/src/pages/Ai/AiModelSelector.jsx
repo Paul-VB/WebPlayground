@@ -7,7 +7,7 @@ const AiModelSelector = ({ instance }) => {
 			<label htmlFor="ai-model-select">Select AI Model:</label>
 			<select
 				id="ai-model-select"
-				value={instance.selectedModel}
+				value={instance.selectedModel.model}
 				onChange={e => instance.setSelectedModel(e.target.value)}
 			>
 				{instance.models.map(model => (
@@ -22,7 +22,7 @@ const AiModelSelector = ({ instance }) => {
 
 
 
-function useAiModelSelector() {
+function useAiModelSelector(defaultModelName = 'gemma3:12b') {
 	const modelListUrl = `${import.meta.env.VITE_API_URL}/ai/tags`;
 	const [models, setModels] = useState([]);
 	const [selectedModel, setSelectedModel] = useState({});
@@ -33,9 +33,9 @@ function useAiModelSelector() {
 		});
 		let data = (await response.json()).models;
 		setModels(data);
-		if (data.length > 0) {
-			setSelectedModel(data[0].model);
-		}
+		let defaultModel = data.find(model => model.name === defaultModelName) || data[0];
+		console.log('Default model:', defaultModel);
+		setSelectedModel(defaultModel);
 	}
 
 	useEffect(() => {
