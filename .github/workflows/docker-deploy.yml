@@ -44,4 +44,7 @@ jobs:
           context: .
           file: ./WebPlayground.Api/Dockerfile
           push: true
-          tags: ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:${{ env.DOCKER_TAG }}
+          tags: ghcr.io/${{ env.GITHUB_REPOSITORY_LOWERCASE }}:latest
+          labels: |
+            org.opencontainers.image.created=${{ env.UTC_DATE }}
+            org.opencontainers.image.revision=${{ github.sha }}
