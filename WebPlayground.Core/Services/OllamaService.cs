@@ -9,7 +9,8 @@ namespace WebPlayground.Core.Services
 {
     public interface IOllamaService
     {
-        Stream Chat(ChatRequest request);
+        Task<Stream> Chat(ChatRequest request);
+        Task<string> ListModels();
     }
 
     public class OllamaService : IOllamaService
@@ -23,7 +24,7 @@ namespace WebPlayground.Core.Services
             _configurationManager = configurationManager;
         }
 
-        public Stream Chat(ChatRequest request)
+        public async Task<Stream> Chat(ChatRequest request)
         {
             var url = $"{_configurationManager["OllamaApiUrl"]}/api/chat";
             var json = JsonSerializer.Serialize(request);
@@ -35,14 +36,34 @@ namespace WebPlayground.Core.Services
             HttpResponseMessage response;
             try
             {
-                response = _httpClientWrapper.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).Result;
+                response = await _httpClientWrapper.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead);
                 response.EnsureSuccessStatusCode();
-                return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+                return await response.Content.ReadAsStreamAsync();
             }
             catch (Exception ex)
             {
                 // Log the exception (you can use any logging framework you prefer)
                 Console.WriteLine($"Error occurred while calling Ollama API: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<string> ListModels()
+        {
+            var url = $"{_configurationManager["OllamaApiUrl"]}/api/tags";
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, url);
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClientWrapper.SendAsync(httpRequest);
+                response.EnsureSuccessStatusCode();
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return jsonResponse;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (you can use any logging framework you prefer)
+                Console.WriteLine($"Error occurred while listing models: {ex.Message}");
                 throw;
             }
         }

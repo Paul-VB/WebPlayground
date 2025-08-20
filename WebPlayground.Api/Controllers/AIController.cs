@@ -20,8 +20,15 @@ namespace WebPlayground.Api.Controllers
         public async Task Chat([FromBody] ChatRequest request)
         {
             Response.ContentType = "application/json";
-            using var stream = _ollamaService.Chat(request);
+            using var stream = await _ollamaService.Chat(request);
             await stream.CopyToAsync(Response.Body);
+        }
+
+        [HttpGet("tags")]
+        public async Task<IActionResult> ListModels()
+        {
+            var models = await _ollamaService.ListModels();
+            return new OkObjectResult(models);
         }
 
         // Simple GET method that returns a ContentResult
