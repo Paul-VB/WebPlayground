@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
+using Microsoft.Extensions.Logging;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
+using WebPlayground.Core.Exceptions;
 using WebPlayground.Core.Helpers;
 using WebPlayground.Core.Models.Ollama;
 
@@ -15,11 +17,13 @@ namespace WebPlayground.Core.Services
 
     public class OllamaService : IOllamaService
     {
+        private readonly ILogger<OllamaService> _logger;
         private readonly IHttpClientWrapper _httpClientWrapper;
         private readonly IConfigurationManager _configurationManager;
 
-        public OllamaService(IHttpClientWrapper httpClientWrapper, IConfigurationManager configurationManager)
+        public OllamaService(ILogger<OllamaService> logger, IHttpClientWrapper httpClientWrapper, IConfigurationManager configurationManager)
         {
+            _logger = logger;
             _httpClientWrapper = httpClientWrapper;
             _configurationManager = configurationManager;
         }
@@ -33,38 +37,43 @@ namespace WebPlayground.Core.Services
             {
                 Content = content
             };
-            HttpResponseMessage response;
-            try
-            {
-                response = await _httpClientWrapper.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead);
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsStreamAsync();
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (you can use any logging framework you prefer)
-                Console.WriteLine($"Error occurred while calling Ollama API: {ex.Message}");
-                throw;
-            }
+            var response = await SendWithFriendlyErrorMessages(httpRequest, HttpCompletionOption.ResponseHeadersRead);
+            return await response.Content.ReadAsStreamAsync();
+
         }
 
         public async Task<string> ListModels()
         {
             var url = $"{_configurationManager["OllamaApiUrl"]}/api/tags";
             var httpRequest = new HttpRequestMessage(HttpMethod.Get, url);
-            HttpResponseMessage response;
+            var response = await SendWithFriendlyErrorMessages(httpRequest);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return jsonResponse;
+        }
+
+        private async Task<HttpResponseMessage> SendWithFriendlyErrorMessages(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken cancellationToken = default)
+        {
             try
             {
-                response = await _httpClientWrapper.SendAsync(httpRequest);
+                var response = await _httpClientWrapper.SendAsync(request, completionOption, cancellationToken);
                 response.EnsureSuccessStatusCode();
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                return jsonResponse;
+                return response;
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex) when (ex.InnerException is SocketException)
             {
-                // Log the exception (you can use any logging framework you prefer)
-                Console.WriteLine($"Error occurred while listing models: {ex.Message}");
-                throw;
+                _logger.LogError(ex, "Ollama Host machine is running, but Ollama is not");
+                throw new LoggableException("Ollama Host machine is running, but Ollama is not").MarkAsLogged();
+            }
+            catch (HttpRequestException ex) when (ex.StatusCode != null)
+            {
+                _logger.LogError(ex, "Ollama returned error status {StatusCode} for {Url}",
+                    ex.StatusCode, request.RequestUri);
+                throw new LoggableException($"Ollama returned an error: {ex.StatusCode}").MarkAsLogged();
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogError(ex,"Connection to Ollama Host timed out. The Host Machine may be off");
+                throw new LoggableException("Connection to Ollama Host timed out. The Host Machine may be off", ex).MarkAsLogged();
             }
         }
     }
