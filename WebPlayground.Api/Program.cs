@@ -1,4 +1,5 @@
 using WebPlayground.Api.Initialization;
+using WebPlayground.Api.Middleware;
 
 public class Program
 {
@@ -10,13 +11,7 @@ public class Program
         CorsConfigurator.AddCorsPolicies(builder.Services, builder.Configuration);
 
         var app = builder.Build();
-        ConfigureMiddleware(app);
 
-        app.Run();
-    }
-
-    private static void ConfigureMiddleware(WebApplication app)
-    {
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -30,6 +25,9 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseAuthorization();
+        app.UseMiddleware<HttpLoggingMiddleware>();
         app.MapControllers();
+
+        app.Run();
     }
 }
