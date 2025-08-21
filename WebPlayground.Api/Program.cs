@@ -1,4 +1,4 @@
-using WebPlayground.Api;
+using WebPlayground.Api.Initialization;
 
 public class Program
 {
@@ -7,36 +7,12 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         ApiServiceRegistrar.RegisterServices(builder.Services, builder.Configuration);
-        ConfigureCors(builder.Services);
+        CorsConfigurator.AddCorsPolicies(builder.Services, builder.Configuration);
 
         var app = builder.Build();
         ConfigureMiddleware(app);
 
         app.Run();
-    }
-
-    private static void ConfigureCors(IServiceCollection services)
-    {
-        services.AddCors(options =>
-        {
-            options.AddPolicy("DevelopmentCorsPolicy",
-                policy =>
-                {
-                    policy.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod();
-                });
-
-            options.AddPolicy("ProductionCorsPolicy",
-                policy =>
-                {
-                    policy.WithOrigins(
-                            "https://black-plant-047accb0f.1.azurestaticapps.net"
-                        )
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-        });
     }
 
     private static void ConfigureMiddleware(WebApplication app)
@@ -45,11 +21,11 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseCors("DevelopmentCorsPolicy");
+            app.UseCors(CorsConfigurator.Policies.Development);
         }
         else
         {
-            app.UseCors("ProductionCorsPolicy");
+            app.UseCors(CorsConfigurator.Policies.Production);
         }
 
         app.UseHttpsRedirection();

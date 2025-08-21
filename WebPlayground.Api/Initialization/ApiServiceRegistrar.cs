@@ -1,6 +1,6 @@
 ﻿using WebPlayground.Core;
 
-namespace WebPlayground.Api
+namespace WebPlayground.Api.Initialization
 {
     public static class ApiServiceRegistrar
     {
