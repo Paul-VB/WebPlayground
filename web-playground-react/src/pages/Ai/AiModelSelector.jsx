@@ -36,7 +36,6 @@ function useAiModelSelector(defaultModelName = 'gemma3:12b') {
 		let data = (await response.json()).models;
 		setModels(data);
 		let defaultModel = data.find(model => model.name === defaultModelName) || data[0];
-		console.log('Default model:', defaultModel);
 		setSelectedModel(defaultModel);
 	}
 
