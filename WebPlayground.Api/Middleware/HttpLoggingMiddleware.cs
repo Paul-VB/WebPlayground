@@ -1,4 +1,6 @@
-﻿namespace WebPlayground.Api.Middleware
+﻿using WebPlayground.Core.Exceptions;
+
+namespace WebPlayground.Api.Middleware
 {
     public class HttpLoggingMiddleware
     {
@@ -18,6 +20,10 @@
                 await _next(context);
                 if (context.Response.StatusCode >= 400)
                     LogResponse (context);
+            }
+            catch (LoggableException ex) when (ex.IsLogged)
+            {
+                throw;
             }
             catch (Exception ex)
             {
