@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using WebPlayground.Core.Services;
-using WebPlayground.Core.Helpers;
+using WebPlayground.Core.Wrappers;
 
 namespace WebPlayground.Core
 {

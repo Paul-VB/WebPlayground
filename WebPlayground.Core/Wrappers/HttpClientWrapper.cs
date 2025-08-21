@@ -1,4 +1,4 @@
-namespace WebPlayground.Core.Helpers
+namespace WebPlayground.Core.Wrappers
 {
     public interface IHttpClientWrapper
     {

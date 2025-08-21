@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using WebPlayground.Core.Exceptions;
-using WebPlayground.Core.Helpers;
+using WebPlayground.Core.Wrappers;
 using WebPlayground.Core.Models.Ollama;
 
 namespace WebPlayground.Core.Services
