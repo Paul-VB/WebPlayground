@@ -1,5 +1,4 @@
 using WebPlayground.Api.Initialization;
-using WebPlayground.Api.Middleware;
 
 public class Program
 {
@@ -25,8 +24,7 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseAuthorization();
-        app.UseCustomExceptionHandler();
-        app.UseMiddleware<HttpLoggingMiddleware>();
+        //app.UseCustomExceptionHandler();
         app.MapControllers();
 
         app.Run();
