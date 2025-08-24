@@ -35,15 +35,22 @@ namespace WebPlayground.Api.Controllers
         [HttpGet("tags")]
         public async Task<IActionResult> ListModels()
         {
-            var models = await _ollamaService.ListModels();
-            return new OkObjectResult(models);
+            try
+            {
+                var models = await _ollamaService.ListModels();
+                return new OkObjectResult(models);
+            }
+            catch (ServiceOfflineException ex)
+            {
+                return StatusCode(503, new { error = ex.Message });
+            }
         }
 
-        // Simple GET method that returns a ContentResult
-        [HttpGet("test")]
-        public IActionResult GetContent()
-        {
-            return new OkObjectResult("test from ai");
+            // Simple GET method that returns a ContentResult
+            [HttpGet("test")]
+            public IActionResult GetContent()
+            {
+                return new OkObjectResult("test from ai");
+            }
         }
     }
-}
