@@ -3,15 +3,11 @@
     public class LoggableException : Exception
     {
         public bool IsLogged { get; set; }
-
-        public LoggableException(string message, bool isLogged = false) : base(message)
+        public LoggableException(string message) : base(message)
         {
-            IsLogged = isLogged;
         }
-
-        public LoggableException(string message, Exception innerException, bool isLogged = false) : base(message, innerException)
+        public LoggableException(string message, Exception innerException) : base(message, innerException)
         {
-            IsLogged = isLogged;
         }
 
         public LoggableException MarkAsLogged()

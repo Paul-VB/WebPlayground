@@ -32,6 +32,9 @@ namespace WebPlayground.Core.Services
         {
             var url = $"{_configurationManager["OllamaApiUrl"]}/api/chat";
             var json = JsonSerializer.Serialize(request);
+
+            _logger.LogInformation("Sending to Ollama: {Json}", json);
+
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var httpRequest = new HttpRequestMessage(HttpMethod.Post, url)
             {
@@ -62,7 +65,7 @@ namespace WebPlayground.Core.Services
             catch (HttpRequestException ex) when (ex.InnerException is SocketException)
             {
                 _logger.LogError(ex, "Ollama Host machine is running, but Ollama is not");
-                throw new LoggableException("Ollama Host machine is running, but Ollama is not").MarkAsLogged();
+                throw new ServiceOfflineException("Ollama Host machine is running, but Ollama is not").MarkAsLogged();
             }
             catch (HttpRequestException ex) when (ex.StatusCode != null)
             {
@@ -73,7 +76,7 @@ namespace WebPlayground.Core.Services
             catch (TaskCanceledException ex)
             {
                 _logger.LogError(ex,"Connection to Ollama Host timed out. The Host Machine may be off");
-                throw new LoggableException("Connection to Ollama Host timed out. The Host Machine may be off", ex).MarkAsLogged();
+                throw new ServiceOfflineException("Connection to Ollama Host timed out. The Host Machine may be off").MarkAsLogged();
             }
         }
     }

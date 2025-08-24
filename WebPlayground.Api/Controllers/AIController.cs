@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using WebPlayground.Core.Exceptions;
 using WebPlayground.Core.Models.Ollama;
 using WebPlayground.Core.Services;
-using System.Threading.Tasks;
 
 namespace WebPlayground.Api.Controllers
 {
@@ -19,9 +20,16 @@ namespace WebPlayground.Api.Controllers
         [HttpPost("chat")]
         public async Task Chat([FromBody] ChatRequest request)
         {
-            Response.ContentType = "application/json";
-            using var stream = await _ollamaService.Chat(request);
-            await stream.CopyToAsync(Response.Body);
+            try
+            {
+                Response.ContentType = "application/json";
+                using var stream = await _ollamaService.Chat(request);
+                await stream.CopyToAsync(Response.Body);
+            } catch (ServiceOfflineException ex)
+            {
+                Response.StatusCode = 503; // Service Unavailable
+                await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes($"{{\"error\":\"{ex.Message}\"}}"));
+            }
         }
 
         [HttpGet("tags")]
