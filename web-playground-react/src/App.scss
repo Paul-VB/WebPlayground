@@ -1,0 +1,18 @@
+.app-container {
+    height: 100vh;
+	padding: 8px;
+    display: grid;
+    grid-template-areas:
+        "menu"
+        "content";
+    grid-template-rows: auto 1fr;
+}
+
+.menu-container {
+    grid-area: menu;
+}
+
+.content-container {
+    grid-area: content;
+    overflow-y: auto;
+}
