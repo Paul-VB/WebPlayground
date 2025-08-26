@@ -1,0 +1,35 @@
+$themes: (
+	'dark': (
+		bg-primary: rgb(25, 25, 25),
+		bg-secondary: rgb(50, 50, 55),
+		bg-tertiary: rgb(80, 80, 90),
+		accent-primary: rgb(13, 116, 89),
+		accent-secondary: rgb(67, 110, 197),
+		text-primary: rgb(255, 255, 255),
+		text-secondary: rgb(175, 175, 175),
+	),
+	'green-blue': (
+		bg-primary: rgb(26, 26, 26),
+		bg-secondary: rgb(6, 57, 43),
+		bg-tertiary: rgb(18, 89, 67),
+		accent-primary: rgb(67, 110, 197),
+		accent-secondary: rgb(95, 157, 193),
+		text-primary: rgb(255, 255, 255),
+		text-secondary: rgb(200, 200, 200),
+	)
+);
+
+@each $theme-name, $theme-vars in $themes {
+	[data-theme='#{$theme-name}'] {
+		@each $var, $value in $theme-vars {
+			--#{$var}: #{$value};
+		}
+	}
+}
+
+
+:root {
+	@each $var, $value in map-get($themes, 'green-blue') {
+		--#{$var}: #{$value};
+	}
+}

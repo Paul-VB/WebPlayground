@@ -5,18 +5,16 @@
 		justify-content: center;
 		align-items: center;
 		margin-bottom: 20px;
-		/* Adds spacing below the headshot */
 		padding: 1rem 0;
-		/* Adds top and bottom padding */
 	}
 
 	.headshot {
 		width: 150px;
-		border-radius: 50%;
-		transition: box-shadow 0.3s ease; // Smooth transition for the glow effect
+		border-radius: $radius-round;
+		transition: box-shadow $transition;
 
 		&:hover {
-			box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); // Adds a 20px glow
+			box-shadow: 0 0 20px $accent-primary;
 		}
 	}
 
@@ -27,18 +25,18 @@
 	.bird-container {
 		display: flex;
 		justify-content: center;
-		gap: 10px; /* Space between birds */
-		margin: 20px 0; /* Add spacing above and below the birds */
+		gap: 10px;
+		margin: 20px 0;
 	}
 
 	.bird {
 		font-size: 2rem;
 		cursor: pointer;
-		transition: color 0.2s ease, transform 0.2s ease; /* Smooth transition for color and scaling */
+		transition: color $transition, transform $transition;
 
 		&:hover {
-			color: pink; /* Changes text color to pink */
-			transform: scale(1.4); /* Simulates a "4x font weight" by scaling the text */
+			color: $accent-secondary;
+			transform: scale(1.4);
 		}
 	}
 }

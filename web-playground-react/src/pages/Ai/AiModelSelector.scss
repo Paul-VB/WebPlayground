@@ -1,5 +1,5 @@
 .ai-model-selector select option:checked {
-  background-color: #1571bb;
+  background-color: $accent-primary;
   color: inherit;
 }
 
@@ -8,11 +8,11 @@
 }
 
 .ai-model-selector select {
-  border-radius: 4px;
+  border-radius: $radius-md;
   width: 350px;
   border: 0px;
-  padding: 5px;
+  padding: $padding-sm;
   color: inherit;
   font-size: 1rem;
-  background-color: rgb(73, 73, 73);
+  background-color: $bg-tertiary;
 }

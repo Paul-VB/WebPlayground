@@ -1,4 +1,4 @@
-import './NavBar.css';
+import './NavBar.scss';
 import NavBarButton from './NavBarButton';
 import { ROUTES } from 'src/routes.jsx';
 import { useNavigate } from 'react-router-dom';

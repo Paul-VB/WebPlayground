@@ -1,0 +1,54 @@
+.chat-input {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	grid-template-rows: auto auto;
+	gap: $padding-sm;
+	grid-template-areas: 
+		"textbox textbox"
+		"options send";
+
+	.chat-input-textbox-container {
+		grid-area: textbox;
+		width: 100%;
+
+		.chat-input-textbox {
+			min-height: 150px;
+			width: 100%;
+			resize: none;
+			border-radius: $radius-md;
+			background-color: $bg-tertiary;
+			border: 3px solid transparent;
+			padding: $padding-sm;
+			transition: border-color $transition;
+
+			&:focus {
+				border-color: $accent-primary;
+				outline: none;
+			}
+		}
+	}
+
+	.chat-options {
+		grid-area: options;
+	}
+
+	.chat-send-button {
+		grid-area: send;
+		width: 50px;
+		height: 50px;
+		border: none;
+		border-radius: $radius-md;
+		background-color: $accent-primary;
+		color: $text-primary;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: background-color $transition;
+		
+		&:hover {
+			background-color: $accent-secondary;
+		}
+	}
+}
