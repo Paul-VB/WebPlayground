@@ -6,11 +6,16 @@
 	background-color: #242424;
 }
 
+#root {
+	height: 100vh;
+	padding: 8px;
+}
+
 body {
     margin: 0;
 }
 
-*, *::before, *::after {
+* {
     box-sizing: border-box;
 }
 
