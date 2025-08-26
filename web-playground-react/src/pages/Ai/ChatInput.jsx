@@ -19,7 +19,14 @@ const ChatInput = ({ instance }) => {
 					rows={3}
 				/>
 			</div>
-			<div>
+			<button
+				className="chat-send-button"
+				onClick={() => instance.onSend()}
+				disabled={instance.isLoading || !instance.value.trim()}
+			>
+				→
+			</button>
+			<div className="chat-options">
 				<input
 					type="checkbox"
 					checked={instance.shouldStream}
