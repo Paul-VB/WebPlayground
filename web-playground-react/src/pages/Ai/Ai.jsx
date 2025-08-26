@@ -1,4 +1,5 @@
 import './Ai.scss';
+import 'src/styles/page.scss';
 import AiModelSelector, { useAiModelSelector } from './AiModelSelector';
 import ChatHistory, { useChatHistory } from './ChatHistory';
 import ChatInput, { useChatInput } from './ChatInput';
@@ -61,10 +62,14 @@ const Ai = () => {
 	}
 
 	return (
-		<div className="ai">
-			<h1>Ai</h1>
-			<div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: '10px' }}>
+		<div className="ai page">
+			<div className='page-header'>
+				<h1>Ai</h1>
+			</div>
+			<div className='page-body'>
 				<ChatHistory instance={chatHistory} />
+			</div>
+			<div className='page-footer'>
 				<ChatInput instance={chatInput} />
 				<AiModelSelector instance={aiModelSelector} />
 			</div>
