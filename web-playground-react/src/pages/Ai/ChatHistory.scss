@@ -1,28 +1,24 @@
 .markdown-body {
 	background-color: transparent !important;
-	/* Or whatever color you want */
 	color: inherit !important;
-	/* Use your app's text color */
 }
 
 .chat-history-container {
-	border: 1px solid #fff;
 	height: 100%;
 	overflow-y: auto;
 	white-space: pre-wrap;
-	padding-left: 6px;
+	padding-left: $padding-sm;
 }
 
 .chat-message-container {
-	padding: 10px;
-	margin: 10px 0;
-	border-radius: 10px;
+	padding: $padding-sm;
+	margin: $padding-sm 0;
+	border-radius: $radius-md;
 	&[data-role="user"] {
-		background-color: rgba(37, 37, 179, 0.3);
+		background-color: $accent-primary;
 	}
 
-	// Style AI messages
 	&[data-role="assistant"] {
-		background-color: rgba(107, 105, 105, 0.3);
+		background-color: $accent-secondary;
 	}
 }

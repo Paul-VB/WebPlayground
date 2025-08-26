@@ -5,12 +5,23 @@
 	height: 100%;
 
 	.page-header {
+		padding: $padding-sm;
+		background-color: $bg-secondary;
+
+		h1,
+		h2 {
+			text-align: center;
+			margin: 0;
+		}
 	}
 
 	.page-body {
+		padding: $padding-sm;
 		overflow-y: auto;
 	}
 
 	.page-footer {
+		padding: $padding-sm;
+		background-color: $bg-secondary;
 	}
 }

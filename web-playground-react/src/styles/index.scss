@@ -1,14 +1,16 @@
+@import './variables.scss';
+
 :root {
 	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 	font-size: 20px;
 
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #242424;
+	color: $text-primary;
+	background-color: $bg-primary;
 }
 
 #root {
 	height: 100vh;
-	padding: 8px;
+	padding: 0;
 }
 
 body {

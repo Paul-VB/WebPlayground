@@ -1,0 +1,25 @@
+.navbar {
+	height: 100%;
+    display: flex;
+	padding: $padding-sm;
+    
+    background-color: $bg-tertiary;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar-button {
+    background-color: transparent;
+    border: none;
+    border-radius: $radius-md;
+    cursor: pointer;
+	padding: $padding-sm;
+	font-size: 1.2rem;
+	color: $text-primary;
+    transition: background-color $transition;
+}
+
+.navbar-button:hover {
+    background-color: $accent-primary;
+} 
