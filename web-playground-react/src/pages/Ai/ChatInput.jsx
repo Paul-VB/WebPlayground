@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './ChatInput.scss';
 
 const ChatInput = ({ instance }) => {
 	function handleKeyDown(event) {
@@ -8,9 +9,9 @@ const ChatInput = ({ instance }) => {
 		}
 	}
 	return (
-		<div>
-			<div className={`loading-container ${instance.isLoading ? 'loading' : ''}`}>
-				<textarea
+		<div className="chat-input">
+			<div className={`chat-input-textbox-container loading-container ${instance.isLoading ? 'loading' : ''}`}>
+				<textarea className="chat-input-textbox"
 					placeholder="Type your message..."
 					value={instance.value}
 					onChange={e => instance.setValue(e.target.value)}

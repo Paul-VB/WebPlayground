@@ -1,0 +1,23 @@
+.chat-input {
+	width: 100%;
+}
+
+.chat-input-textbox-container {
+	width: 100%;
+}
+
+.chat-input-textbox {
+	min-height: 150px;
+	width: 100%;
+	resize: none;
+	border-radius: $radius-md;
+	background-color: $bg-tertiary;
+	border: 3px solid transparent;
+	padding: $padding-sm;
+	transition: border-color $transition;
+
+	&:focus {
+		border-color: $accent-primary;
+		outline: none;
+	}
+}
