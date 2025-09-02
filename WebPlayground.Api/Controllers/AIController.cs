@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using WebPlayground.Core.Exceptions;
 using WebPlayground.Core.Models.Ollama;
 using WebPlayground.Core.Services;
@@ -25,7 +24,8 @@ namespace WebPlayground.Api.Controllers
                 Response.ContentType = "application/json";
                 using var stream = await _ollamaService.Chat(request);
                 await stream.CopyToAsync(Response.Body);
-            } catch (ServiceOfflineException ex)
+            }
+            catch (ServiceOfflineException ex)
             {
                 Response.StatusCode = 503; // Service Unavailable
                 await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes($"{{\"error\":\"{ex.Message}\"}}"));
@@ -46,11 +46,11 @@ namespace WebPlayground.Api.Controllers
             }
         }
 
-            // Simple GET method that returns a ContentResult
-            [HttpGet("test")]
-            public IActionResult GetContent()
-            {
-                return new OkObjectResult("test from ai");
-            }
+        // Simple GET method that returns a ContentResult
+        [HttpGet("test")]
+        public IActionResult GetContent()
+        {
+            return new OkObjectResult("test from ai");
         }
     }
+}
