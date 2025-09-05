@@ -12,6 +12,7 @@ namespace WebPlayground.Api.Initialization
             services.AddSwaggerGen();
 
             CoreServiceRegistrar.RegisterServices(services, configuration);
+            Data.PostgreSQL.DataServiceRegistrar.RegisterDataServices(services, configuration);
         }
     }
 }
