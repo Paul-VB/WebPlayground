@@ -8,22 +8,25 @@ namespace WebPlayground.Data.PostgreSQL.Repositories
     {
         protected readonly MainDbContext Context;
         protected readonly DbSet<T> DbSet;
+        
         public BaseRepository(MainDbContext context)
         {
             Context = context;
             DbSet = context.Set<T>();
         }
-        public IEnumerable<T> GetAll() => DbSet;
+        
+        public IQueryable<T> GetAll() => DbSet;
 
-        public T? GetById(long id) => DbSet.Where(e => e.Id == id).FirstOrDefault();
+        public async Task<T?> GetByIdAsync(long id) => await DbSet.FindAsync(id);
 
-        public T Upsert(T entity)
+        public async Task<T> UpsertAsync(T entity)
         {
             if (entity.Id == 0)
                 DbSet.Add(entity);
             else
                 DbSet.Update(entity);
-            Context.SaveChanges();
+            
+            await Context.SaveChangesAsync();
             return entity;
         }
     }

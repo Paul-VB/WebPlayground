@@ -4,8 +4,8 @@ namespace WebPlayground.Data.Repositories
 {
     public interface IBaseRepository<T> where T : Entity
     {
-        public IEnumerable<T> GetAll();
-        public T? GetById(long id);
-        public T Upsert(T entity);
+        IQueryable<T> GetAll();
+        Task<T?> GetByIdAsync(long id);
+        Task<T> UpsertAsync(T entity);
     }
 }
