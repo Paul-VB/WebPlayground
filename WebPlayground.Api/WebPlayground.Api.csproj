@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebPlayground.Core\WebPlayground.Core.csproj" />
+    <ProjectReference Include="..\WebPlayground.Data.ClientIndexedDb\WebPlayground.Data.ClientIndexedDb.csproj" />
     <ProjectReference Include="..\WebPlayground.Data.PostgreSQL\WebPlayground.Data.PostgreSQL.csproj" />
   </ItemGroup>
 
