@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebPlayground.Data.Models.Ai
 {
-    public class DocumentChunk
+    public class DocumentChunk : Entity
     {
-        [Key]
-        public long Id { get; set; }
         public long DocumentFk { get; set; }
         [ForeignKey(nameof(DocumentFk))]
         public Document Document { get; set; }
