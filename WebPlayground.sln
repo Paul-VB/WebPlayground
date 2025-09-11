@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPlayground.Data", "WebPl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPlayground.Data.PostgreSQL", "WebPlayground.Data.PostgreSQL\WebPlayground.Data.PostgreSQL.csproj", "{A5FA626D-F811-4823-832D-CFD8215758CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPlayground.Data.ClientIndexedDb", "WebPlayground.Data.ClientIndexedDb\WebPlayground.Data.ClientIndexedDb.csproj", "{F86D7040-4378-4ECE-A362-E1072AE8DCEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPlayground.Data.ClientSqlJs", "WebPlayground.Data.ClientSqlJs\WebPlayground.Data.ClientSqlJs.csproj", "{F86D7040-4378-4ECE-A362-E1072AE8DCEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
