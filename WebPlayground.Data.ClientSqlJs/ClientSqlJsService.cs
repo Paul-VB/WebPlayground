@@ -1,25 +1,28 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
-namespace WebPlayground.Data.ClientIndexedDb
+namespace WebPlayground.Data.ClientSqlJs
 {
-    public interface IClientIndexedDbService
+    public interface IClientSqlJsService
     {
         Task InitializeConnection(HttpContext httpContext);
         Task<QueryResponse> QueryDb(Query query);
         Task HandleDbToServerResponse(QueryResponse response);
     }
-    public class ClientIndexedDbService : IClientIndexedDbService
+    public class ClientSqlJsService : IClientSqlJsService
     {
+        private readonly ILogger<ClientSqlJsService> _logger;
+
         private readonly TimeSpan _connectionTimeout = TimeSpan.FromMinutes(2);
         private readonly TimeSpan _heartbeatInterval = TimeSpan.FromSeconds(10);
 
         private DateTime _lastActivityUtc { get; set; } = DateTime.UtcNow;
         private Dictionary<Guid, TaskCompletionSource<QueryResponse>> _pendingQueries = new();
-        private HttpContext _activeConnectionContext;
-        public ClientIndexedDbService()
+        private HttpContext? _activeConnectionContext;
+        public ClientSqlJsService(ILogger<ClientSqlJsService> logger)
         {
-            
+            this._logger = logger;
         }
 
         public async Task InitializeConnection(HttpContext httpContext)
@@ -59,8 +62,15 @@ namespace WebPlayground.Data.ClientIndexedDb
         {
             UpdateLastActivityUtc();
 
-            var pendingPromise = _pendingQueries[response.QueryId];
-            pendingPromise.SetResult(response);
+            try
+            {
+                var pendingPromise = _pendingQueries[response.QueryId];
+                pendingPromise.SetResult(response);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogError(ex, "No pending query found for QueryId: {QueryId}", response.QueryId);
+            }
 
             return Task.CompletedTask;
         }
