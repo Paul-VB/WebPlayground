@@ -16,6 +16,7 @@
 		"react-dom": "^19.1.0",
 		"react-markdown": "^10.1.0",
 		"react-router-dom": "^7.7.1",
+		"sql.js": "^1.13.0",
 		"valtio": "^2.1.5"
 	},
 	"devDependencies": {
