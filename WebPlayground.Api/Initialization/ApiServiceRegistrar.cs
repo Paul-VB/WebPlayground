@@ -10,12 +10,30 @@ namespace WebPlayground.Api.Initialization
         {
             services.AddWebSockets(options => { });
             services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            
+            // Session configuration
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddHttpContextAccessor();
+            
+            ConfigureSwagger(services);
+            
+            CoreServiceRegistrar.RegisterServices(services, configuration);
+            InfrastructureServiceRegistrar.RegisterServices(services, configuration);
+            //Data.PostgreSQL.DataServiceRegistrar.RegisterDataServices(services, configuration);
+            Data.ClientSqlJs.DataServiceRegistrar.RegisterDataServices(services, configuration);
+        }
+
+        private static void ConfigureSwagger(IServiceCollection services)
+        {
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-
-            CoreServiceRegistrar.RegisterServices(services, configuration);
-            Data.PostgreSQL.DataServiceRegistrar.RegisterDataServices(services, configuration);
         }
     }
 }
