@@ -25,6 +25,7 @@ public class Program
         app.UseHttpsRedirection();
         app.UseAuthorization();
         //app.UseCustomExceptionHandler();
+        app.UseWebSockets();
         app.MapControllers();
 
         app.Run();

@@ -1,4 +1,6 @@
-﻿using WebPlayground.Core;
+﻿using Microsoft.AspNetCore.WebSockets;
+using WebPlayground.Core;
+using WebPlayground.Infrastructure;
 
 namespace WebPlayground.Api.Initialization
 {
@@ -6,6 +8,7 @@ namespace WebPlayground.Api.Initialization
     {
         public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddWebSockets(options => { });
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();

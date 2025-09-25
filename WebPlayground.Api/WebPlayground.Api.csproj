@@ -22,6 +22,7 @@
     <ProjectReference Include="..\WebPlayground.Core\WebPlayground.Core.csproj" />
     <ProjectReference Include="..\WebPlayground.Data.ClientSqlJs\WebPlayground.Data.ClientSqlJs.csproj" />
     <ProjectReference Include="..\WebPlayground.Data.PostgreSQL\WebPlayground.Data.PostgreSQL.csproj" />
+    <ProjectReference Include="..\WebPlayground.Infrastructure\WebPlayground.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPlayground.Data.PostgreS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPlayground.Data.ClientSqlJs", "WebPlayground.Data.ClientSqlJs\WebPlayground.Data.ClientSqlJs.csproj", "{F86D7040-4378-4ECE-A362-E1072AE8DCEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPlayground.Infrastructure", "WebPlayground.Infrastructure\WebPlayground.Infrastructure.csproj", "{CAF88FB3-4C86-4FF1-9616-7A6DFD7ECDB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{F86D7040-4378-4ECE-A362-E1072AE8DCEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F86D7040-4378-4ECE-A362-E1072AE8DCEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F86D7040-4378-4ECE-A362-E1072AE8DCEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAF88FB3-4C86-4FF1-9616-7A6DFD7ECDB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAF88FB3-4C86-4FF1-9616-7A6DFD7ECDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAF88FB3-4C86-4FF1-9616-7A6DFD7ECDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAF88FB3-4C86-4FF1-9616-7A6DFD7ECDB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
