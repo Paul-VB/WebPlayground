@@ -1,15 +1,21 @@
 import './Ai.scss';
 import 'src/styles/page.scss';
+import { useEffect } from 'react';
 import AiModelSelector, { useAiModelSelector } from './AiModelSelector';
 import ChatHistory, { useChatHistory } from './ChatHistory';
 import ChatInput, { useChatInput } from './ChatInput';
 import { ReadNdjsonStream } from 'src/utils/ndjsonStreamReader';
+import clientSqlJsService from 'src/utils/clientSqlJsService';
 
 const Ai = () => {
 	const ollamaUrl = `${import.meta.env.VITE_API_URL}/ai/chat`;
 	const chatHistory = useChatHistory();
 	const chatInput = useChatInput(handleSendMessage);
 	const aiModelSelector = useAiModelSelector();
+
+	useEffect(() => {
+		clientSqlJsService.initConnection();
+	}, []);
 
 	async function handleSendMessage() {
 		let message = {
