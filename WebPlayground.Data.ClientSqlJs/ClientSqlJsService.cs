@@ -1,103 +1,66 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
+using WebPlayground.Infrastructure.WebSocket.Services;
 
 namespace WebPlayground.Data.ClientSqlJs
 {
     public interface IClientSqlJsService
     {
-        Task InitializeConnection(HttpContext httpContext);
-        Task<QueryResponse> QueryDb(Query query);
-        Task HandleDbToServerResponse(QueryResponse response);
+        Task LoadDb(string dbName);
+        Task SaveDb();
+        Task CreateDbIfNotExists(string dbName);
+        Task<object> Query(string sql, object[] parameters = null);
+        Task<int> NonQuery(string sql, object[] parameters = null);
     }
     public class ClientSqlJsService : IClientSqlJsService
     {
-        private readonly ILogger<ClientSqlJsService> _logger;
-
-        private readonly TimeSpan _connectionTimeout = TimeSpan.FromMinutes(2);
-        private readonly TimeSpan _heartbeatInterval = TimeSpan.FromSeconds(10);
-
-        private DateTime _lastActivityUtc { get; set; } = DateTime.UtcNow;
-        private Dictionary<Guid, TaskCompletionSource<QueryResponse>> _pendingQueries = new();
-        private HttpContext? _activeConnectionContext;
-        public ClientSqlJsService(ILogger<ClientSqlJsService> logger)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWebSocketService _webSocketService;
+        public ClientSqlJsService(IHttpContextAccessor httpContextAccessor, IWebSocketService webSocketService)
         {
-            this._logger = logger;
+            _httpContextAccessor = httpContextAccessor;
+            _webSocketService = webSocketService;
+            InitializeDatabase();
         }
 
-        public async Task InitializeConnection(HttpContext httpContext)
+        private void InitializeDatabase()
         {
-            _activeConnectionContext = httpContext;
-            var response = httpContext.Response;
-            response.Headers.Append("Content-Type", "text/event-stream");
-            response.Headers.Append("Cache-Control", "no-cache");
-            response.Headers.Append("Connection", "keep-alive");
-
-            while (!httpContext.RequestAborted.IsCancellationRequested)
+            async void init()
             {
-                if (DateTime.UtcNow - _lastActivityUtc > _connectionTimeout) break;
-
-                await Task.Delay(_heartbeatInterval);
-                await SendSseComment("heartbeat");
-            }
-            _activeConnectionContext = null;
-            _pendingQueries.Clear();
-            return;
-        }
-
-        public async Task<QueryResponse> QueryDb(Query query)
-        {
-            var promise = new TaskCompletionSource<QueryResponse>();
-            _pendingQueries[query.QueryId] = promise;
-
-            var queryJson = JsonSerializer.Serialize(query);
-            await SendSseData(queryJson);
-
-            var response = await promise.Task;
-            _pendingQueries.Remove(query.QueryId);
-            return response;
-        }
-
-        public Task HandleDbToServerResponse(QueryResponse response)
-        {
-            UpdateLastActivityUtc();
-
-            try
-            {
-                var pendingPromise = _pendingQueries[response.QueryId];
-                pendingPromise.SetResult(response);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                _logger.LogError(ex, "No pending query found for QueryId: {QueryId}", response.QueryId);
+                await CreateDbIfNotExists("webplayground_dev"); //todo: make configurable
+                await LoadDb("webplayground_dev");
             }
 
-            return Task.CompletedTask;
-        }
-        private void UpdateLastActivityUtc() => _lastActivityUtc = DateTime.UtcNow; 
-        private async Task SendSseData(string messageJson)
-        {
-            if (_activeConnectionContext == null) throw new InvalidOperationException("No active connection");
-            var response = _activeConnectionContext.Response;
-            await response.WriteAsync($"data: {messageJson}\n\n");
-            await response.Body.FlushAsync();
+            _webSocketService.OnInitialize += init;
+
         }
 
-        private async Task SendSseComment(string comment)
+        public async Task LoadDb(string dbName)
         {
-            if (_activeConnectionContext == null) throw new InvalidOperationException("No active connection");
-            var response = _activeConnectionContext.Response;
-            await response.WriteAsync($": {comment}\n\n");
-            await response.Body.FlushAsync();
+            var Payload = JsonSerializer.Serialize(new { dbName });
+            var response = await _webSocketService.SendAsync("loadDb", Payload);
         }
-    }
-    //todo move these to their own files
-    public class Query
-    {
-        public Guid QueryId { get; set; } = Guid.NewGuid();
-    }
-    public class QueryResponse
-    {
-        public Guid QueryId { get; set; }
+
+        public async Task SaveDb()
+        {
+            var Payload = "{}";
+            var response = await _webSocketService.SendAsync("loadDb", Payload);
+        }
+
+        public async Task CreateDbIfNotExists(string dbName)
+        {
+            var Payload = JsonSerializer.Serialize(new { dbName });
+            var response = await _webSocketService.SendAsync("createDbIfNotExists", Payload);
+        }
+
+        public async Task<object> Query(string sql, object[] parameters = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<int> NonQuery(string sql, object[] parameters = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
